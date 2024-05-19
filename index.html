@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Shoe Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css">
+    <meta name="viewport"
+          content="height=device-height,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport"
+          content="height=device-height,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<section id="process" class="login-process">
+    <div class="container" id="container">
+        <div class="form-container sign-up-form">
+            <form>
+                <h1 class="heading">Create Account</h1>
+                <img class="logo" src="img/HelloShoeShop.png" alt="Shoe Shop Logo" width="150px">
+                <span>or use your email for registration</span>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <input type="text" placeholder="Role Based User Activation Code">
+                <button id="signUpButton">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-form">
+            <form>
+                <h1 class="heading">Sign In</h1>
+                <img class="logo" src="img/HelloShoeShop.png" alt="Shoe Shop Logo" width="150px">
+                <span>or use your email password</span>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <a href="#">Forget Your Password?</a>
+                <button id="signInButton">Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left-panel">
+                    <h1>Welcome Back!</h1>
+                    <p>Register now for a personalized experience with HelloShoes Poss Management System!</p>
+                    <button class="hidden" id="signInToggle">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right-panel">
+                    <h1>Hello, Officer!</h1>
+                    <p>Register now for a personalized experience with HelloShoes Poss Management System!</p>
+                    <button class="hidden" id="signUpToggle">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="sidebar" id="sidebar-container">
+    <div class="logo-details">
+        <i class='bx bx-code-alt'></i>
+        <span class="logo_name">Hello Shoe</span>
+    </div>
+    <ul class="nav-links">
+        <li>
+            <a href="#" id="home_page" class="active">
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" id="customer-page">
+                <i class='bx bx-user'></i>
+                <span class="links_name">Customer</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" id="product-page">
+                <i class='bx bx-box'></i>
+                <span class="links_name">Product</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" id="order-page">
+                <i class='bx bxs-cart'></i>
+                <span class="links_name">Order</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" id="supplier-page">
+                <i class='bx bxs-user-pin'></i>
+                <span class="links_name">Supplier</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" id="stock-page">
+                <i class='bx bx-list-ul'></i>
+                <span class="links_name">Stock</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<section class="nav-bar">
+    <nav>
+        <div class="sidebar-button">
+            <i class='bx bx-menu sidebarBtn'></i>
+            <span class="dashboard" style="text-align: center;">Dashboard</span>
+        </div>
+        <div class="search-box">
+            <input id="searchInput" type="text" placeholder="Search...">
+            <i class='bx bx-search'></i>
+        </div>
+        <div class="profile-details">
+            <img src="img/profile.jpeg" alt="Profile photo">
+            <span class="admin_name">Nimna Kaveesha</span>
+        </div>
+    </nav>
+</section>
+
+
+<script src="script.js"></script>
+<!-- Bootstrap JS and Popper.js (required for Bootstrap JavaScript components) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
