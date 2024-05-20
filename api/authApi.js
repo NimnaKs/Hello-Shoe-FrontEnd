@@ -1,5 +1,4 @@
-export class AuthApi{
-
+export class AuthApi {
     async handleHttpRequest(url, method, data = null) {
         try {
             const response = await fetch(url, {
@@ -10,18 +9,16 @@ export class AuthApi{
                 body: data ? JSON.stringify(data) : null,
             });
 
-            const contentType = response.headers.get("content-type");
-            if (response.ok) {
-                if (contentType && contentType.includes("application/json")) {
-                    return await response.json();
-                } else {
-                    return await response.text();
-                }
-            } else {
-                const errorText = contentType && contentType.includes("application/json")
-                    ? await response.json()
-                    : await response.text();
+            if (!response.ok) {
+                const errorText = await response.text();
                 throw new Error(errorText);
+            }
+
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                return await response.json();
+            } else {
+                return await response.text();
             }
         } catch (error) {
             throw new Error(`Error during HTTP request: ${error.message}`);

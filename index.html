@@ -27,8 +27,8 @@
                 <h1 class="heading">Create Account</h1>
                 <img class="logo" src="img/HelloShoeShop.png" alt="Shoe Shop Logo" width="150px">
                 <span>or use your email for registration</span>
-                <input id="signUp-email" type="email" placeholder="Email">
-                <input id="signUp-password" type="password" placeholder="Password">
+                <input id="signUp-email" type="email" placeholder="Email" required>
+                <input id="signUp-password" type="password" placeholder="Password" required>
                 <select id="signUp-role" required>
                     <option value="" disabled selected>Select Role</option>
                     <option value="USER">User</option>
@@ -36,7 +36,7 @@
                 </select>
                 <div class="btn-panel">
                     <button id="signUpBtn" type="submit">Sign Up</button>
-                    <button id="branchSetUpBtn">Branch Set Up</button>
+                    <button id="branchSetUpBtn" type="button">Branch Set Up</button>
                 </div>
             </form>
         </div>
@@ -45,8 +45,8 @@
                 <h1 class="heading">Sign In</h1>
                 <img class="logo" src="img/HelloShoeShop.png" alt="Shoe Shop Logo" width="150px">
                 <span>or use your email password</span>
-                <input id="signIn-email" type="email" placeholder="Email">
-                <input id="signIn-password" type="password" placeholder="Password">
+                <input id="signIn-email" type="email" placeholder="Email" required>
+                <input id="signIn-password" type="password" placeholder="Password" required>
                 <a href="#">Forget Your Password?</a>
                 <button id="signInBtn" type="submit">Sign In</button>
             </form>

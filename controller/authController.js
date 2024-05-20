@@ -1,6 +1,6 @@
-import {SignInModel} from "../model/signInModel.js";
-import {AuthApi} from "../api/authApi.js";
-import {SignUpModel} from "../model/signUpModel.js";
+import { SignInModel } from "../model/signInModel.js";
+import { AuthApi } from "../api/authApi.js";
+import { SignUpModel } from "../model/signUpModel.js";
 
 const email = $('#signIn-email');
 const password = $('#signIn-password');
@@ -10,25 +10,16 @@ const signUpEmail = $('#signUp-email');
 const signUpPassword = $('#signUp-password');
 const signUpRole = $('#signUp-role');
 
-let authApi = new AuthApi();
-
+const authApi = new AuthApi();
 let globalToken = null;
 
-signInBtn.on('click',(event)=>{
-
+signInBtn.on('click', (event) => {
     event.preventDefault();
-
-    let emailValue = email.val();
-    let passwordValue = password.val();
-
-    let signInModel = new SignInModel(
-        emailValue,
-        passwordValue
-    );
+    const signInModel = new SignInModel(email.val(), password.val());
 
     authApi.signIn(signInModel)
-        .then((responseText) => {
-            globalToken = responseText.token;
+        .then(response => {
+            globalToken = response.token;
             console.log(globalToken);
             Swal.fire({
                 icon: 'success',
@@ -41,23 +32,16 @@ signInBtn.on('click',(event)=>{
             email.val('');
             password.val('');
         })
-        .catch((error) => {
-            showError('SignIn UnSuccessful', error.message);
-        });
+        .catch(error => showError('Sign In Unsuccessful', error.message));
 });
 
-signUpForm.on('submit', function(event) {
+signUpForm.on('submit', (event) => {
     event.preventDefault();
-
-    const user = new SignUpModel(
-        signUpEmail.val(),
-        signUpPassword.val(),
-        signUpRole.val()
-    );
+    const user = new SignUpModel(signUpEmail.val(), signUpPassword.val(), signUpRole.val());
 
     authApi.signUp(user)
-        .then((responseText) => {
-            globalToken = responseText.token;
+        .then(response => {
+            globalToken = response.token;
             console.log(globalToken);
             Swal.fire({
                 icon: 'success',
@@ -69,12 +53,8 @@ signUpForm.on('submit', function(event) {
             });
             signUpForm[0].reset();
         })
-        .catch((error) => {
-            showError('Sign Up Unsuccessful', error.message);
-        });
+        .catch(error => showError('Sign Up Unsuccessful', error.message));
 });
-
-
 
 function showError(title, text) {
     Swal.fire({
