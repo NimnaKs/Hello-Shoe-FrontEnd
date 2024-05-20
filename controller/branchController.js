@@ -4,7 +4,6 @@ import { BranchModel } from "../model/branchModel.js";
 let branchName = $('#branch-name');
 let productCode = $('#product-code');
 let saveBranch = $('#save-branch');
-let resetBtn = $('#branch-reset');
 
 let branchApi = new BranchApi();
 
