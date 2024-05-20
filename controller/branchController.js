@@ -20,11 +20,14 @@ saveBranch.on('click', (event) => {
 
     branchApi.save(branchModel)
         .then((responseText) => {
-            Swal.fire(
-                responseText,
-                'Successful',
-                'success'
-            )
+            Swal.fire({
+                icon: 'success',
+                title: 'Branch Add Successful!',
+                text: 'Welcome back to HelloShoeShop!',
+                footer: '<a href="">Proceed to SignUp</a>',
+                showConfirmButton: false,
+                timer: 3000,
+            });
             branchName.val('');
             productCode.val('');
         })

@@ -31,4 +31,8 @@ export class AuthApi{
     async signIn(signIn) {
         return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/auth/signIn", "POST", signIn);
     }
+
+    async signUp(signUp) {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/auth/signUp", "POST", signUp);
+    }
 }
