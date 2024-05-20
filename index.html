@@ -30,7 +30,10 @@
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
                 <input type="text" placeholder="Role Based User Activation Code">
-                <button id="signUpButton">Sign Up</button>
+                <div class="btn-panel">
+                    <button id="signUpButton">Sign Up</button>
+                    <button id="branchSetUpBtn">Branch Set Up</button>
+                </div>
             </form>
         </div>
         <div class="form-container sign-in-form">
@@ -38,10 +41,10 @@
                 <h1 class="heading">Sign In</h1>
                 <img class="logo" src="img/HelloShoeShop.png" alt="Shoe Shop Logo" width="150px">
                 <span>or use your email password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input id = "signIn-email" type="email" placeholder="Email">
+                <input id = "signIn-password" type="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
-                <button id="signInButton">Sign In</button>
+                <button id="signInBtn">Sign In</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -60,7 +63,34 @@
         </div>
     </div>
 </section>
-<section class="sidebar" id="sidebar-container">
+
+<section id="branch-setUp" class="login-process">
+    <div class="branch-setUp container">
+        <div class="form-container sign-in-form">
+            <form>
+                <h1 class="heading">Create Branch</h1>
+                <img class="logo" src="img/HelloShoeShop.png" alt="Shoe Shop Logo" width="150px">
+                <input id="branch-name" type="text" placeholder="Branch Name">
+                <input id="product-code" type="text" placeholder="Product Activation Code">
+                <div class="btn-panel">
+                    <button id="save-branch">Save Branch</button>
+                    <button id="backBtn">Back</button>
+                </div>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-right-panel">
+                    <h1>Branch setup</h1>
+                    <p>Cultivating growth and connectivity from our roots!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--<section class="sidebar" id="sidebar-container">
     <div class="logo-details">
         <i class='bx bx-code-alt'></i>
         <span class="logo_name">Hello Shoe</span>
@@ -104,7 +134,7 @@
         </li>
     </ul>
 </section>
-<section class="nav-bar">
+<section class="section-container">
     <nav>
         <div class="sidebar-button">
             <i class='bx bx-menu sidebarBtn'></i>
@@ -119,13 +149,238 @@
             <span class="admin_name">Nimna Kaveesha</span>
         </div>
     </nav>
-</section>
+    <div class="content">
+
+        <div class="home-content">
+
+            <div class="welcome-card" style="margin-top: -20px;">
+                <div class="card m-3" style="border-radius: 8px;
+                    background: linear-gradient(115deg, #97abff, #123593);
+                    color: #f5f7fa;
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to dashboard !</h5>
+                        <p class="card-text">Hello Nimna Kaveesha, welcome to your Hello Shoe Shop dashboard !</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-boxes">
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Customers</div>
+                        <div class="number">40</div>
+                        <div class="indicator">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span class="text">Up from yesterday</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-user-plus cart'></i>
+                </div>
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Products</div>
+                        <div class="number">11</div>
+                        <div class="indicator">
+                            <i class='bx bx-down-arrow-alt down'></i>
+                            <span class="text">Down From Today</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-cart cart four'></i>
+                </div>
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Orders</div>
+                        <div class="number">38</div>
+                        <div class="indicator">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span class="text">Up from yesterday</span>
+                        </div>
+                    </div>
+                    <i class='bx bxl-shopify cart two'></i>
+                </div>
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Profit</div>
+                        <div class="number">$12</div>
+                        <div class="indicator">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span class="text">Up from yesterday</span>
+                        </div>
+                    </div>
+                    <i class='bx bxs-dollar-circle cart three'></i>
+                </div>
+            </div>
+
+            <div class="row m-3 overview">
+
+                <div class="card m-1 cards col-md-8" style="border-radius: 8px;
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Monthly Income of last 12 months</h5>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
 
 
+                <div id="outStockTable" class="card m-1 cards" style="border-radius: 8px;
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                        height: 24rem;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Out of Stock Products</h5>
+                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true"
+                             style="position: relative; height: 200px;">
+                            <table class="table table-striped mb-0">
+                                <thead style="background-color: #002d72; text-align: center;">
+                                <tr>
+                                    <th scope="col" class="text-center">ID
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        Item
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        Description
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="customer-content" id="customer">
+
+            <section class="intro">
+                <div class="bg-image h-100" style="background-color: #f5f7fa;">
+                    <div class="mask d-flex align-items-center h-100">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body p-0">
+                                            <div class="table-responsive table-scroll"
+                                                 data-mdb-perfect-scrollbar="true"
+                                                 style="position: relative; height: 500px;">
+                                                <table class="table table-striped mb-0">
+                                                    <thead style="background-color: #002d72; text-align: center;">
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Level</th>
+                                                        <th scope="col">Join Date</th>
+                                                        <th scope="col">Total Point</th>
+                                                        <th scope="col">Date Of Birth</th>
+                                                        <th scope="col">Address</th>
+                                                        <th scope="col">Postal Code</th>
+                                                        <th scope="col">Contact No</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Recent Purchased Date</th>
+                                                        <th scope="col">Update</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="cust-table-body">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        &lt;!&ndash; Add new customer button &ndash;&gt;
+                                        <button class="btn btn-success add-btn" style="width: 200px;"
+                                                data-toggle="modal" data-target="#customerModal" id="custAddBtn">
+                                            Add New Customer
+                                        </button>
+
+                                        &lt;!&ndash; Bootstrap Modal for Add New Student Form &ndash;&gt;
+                                        <div class="modal fade" id="customerModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    &lt;!&ndash; Add New Student Form &ndash;&gt;
+                                                    <div class="modal-body">
+                                                        <form id="customerForm">
+                                                            <h4 id="customerFormHeading">Add New Customer</h4>
+                                                            <div class="form-group">
+                                                                <label for="customerId">Customer ID</label>
+                                                                <input type="text" class="form-control"
+                                                                       id="customerId" placeholder="Enter Customer ID"
+                                                                       required disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Full Name</label>
+                                                                <input type="text" class="form-control" id="name"
+                                                                       placeholder="Enter Full Name" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="address">Address</label>
+                                                                <input type="text" class="form-control" id="address"
+                                                                       placeholder="Enter Address" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="contact">Contact</label>
+                                                                <input type="tel" class="form-control" id="contact"
+                                                                       placeholder="Enter Contact" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email">Email</label>
+                                                                <input type="email" class="form-control" id="email"
+                                                                       placeholder="Enter Email" required>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success"
+                                                                    id="custSaveUpdateButton">Save</button>
+                                                            <button type="button" class="btn btn-dark"
+                                                                    id="custClear">Clear</button>
+                                                            <button hidden type="reset" class="btn btn-dark"
+                                                                    id="custReset">Reset</button>
+                                                        </form>
+                                                    </div>
+                                                    &lt;!&ndash; End of Form &ndash;&gt;
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+</section>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="script.js"></script>
+
+<!-- alert CDNs -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script type="module" src="controller/branchController.js"></script>
+<script type="module" src="controller/authController.js"></script>
+
 <!-- Bootstrap JS and Popper.js (required for Bootstrap JavaScript components) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
 
 </body>
