@@ -1,205 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
-
-.login-process {
-    background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.login-process .container {
-    background-color: #fff;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    position: relative;
-    overflow: hidden;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
-}
-
-.login-process .container p {
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.3px;
-    margin: 20px 0;
-}
-
-.login-process .container span {
-    font-size: 12px;
-}
-
-.login-process .container a {
-    color: #333;
-    font-size: 13px;
-    text-decoration: none;
-    margin: 15px 0 10px;
-}
-
-.login-process .container button {
-    background-color: #0056b3;
-    color: #fff;
-    font-size: 12px;
-    padding: 10px 20px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.login-process .container button.hidden {
-    background-color: transparent;
-    border-color: #fff;
-}
-
-.login-process .container form {
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    height: 100%;
-}
-
-.login-process .container input,
-.login-process .container select {
-    background-color: #eee;
-    border: none;
-    margin: 8px 0;
-    padding: 10px 15px;
-    font-size: 13px;
-    border-radius: 8px;
-    width: 100%;
-    outline: none;
-}
-
-.login-process .form-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
-}
-
-.login-process .sign-in-form {
-    left: 0;
-    width: 50%;
-    z-index: 2;
-}
-
-.login-process .container.active .sign-in-form {
-    transform: translateX(100%);
-}
-
-.login-process .sign-up-form {
-    left: 0;
-    width: 50%;
-    opacity: 0;
-    z-index: 1;
-}
-
-.login-process .container.active .sign-up-form {
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-    animation: move 0.6s;
-}
-
-.login-process .toggle-container {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
-    z-index: 1000;
-}
-
-.login-process .container.active .toggle-container {
-    transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
-}
-
-.login-process .toggle {
-    background-color: #512da8;
-    height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #0056b3);
-    color: #fff;
-    position: relative;
-    left: -100%;
-    height: 100%;
-    width: 200%;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
-}
-
-.login-process .container.active .toggle {
-    transform: translateX(50%);
-}
-
-.login-process .toggle-panel {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 30px;
-    text-align: center;
-    top: 0;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
-}
-
-.login-process .toggle-left-panel {
-    transform: translateX(-200%);
-}
-
-.login-process .container.active .toggle-left-panel {
-    transform: translateX(0);
-}
-
-.login-process .toggle-right-panel {
-    right: 0;
-    transform: translateX(0);
-}
-
-.login-process .container.active .toggle-right-panel {
-    transform: translateX(200%);
-}
-
-.login-process .logo {
-    margin-top: -5px;
-}
-
-.heading {
-    font-size: 32px;
-}
-
-.login-process .btn-panel {
-    display: flex;
-    flex-direction: row;
-    width: 280px;
-    justify-content: space-between;
-}
-
-
 .sidebar{
     position: fixed;
     height: 100%;
@@ -266,14 +71,7 @@
     bottom: 0;
     width: 100%;
 }
-
-.sidebar .nav-links .log_out{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
-.section-container{
+.home-section{
     position: relative;
     background: #f5f5f5;
     min-height: 100vh;
@@ -281,17 +79,16 @@
     left: 240px;
     transition: all 0.5s ease;
 }
-
-.sidebar.active ~ .section-container{
+.sidebar.active ~ .home-section{
     width: calc(100% - 60px);
     left: 60px;
 }
-
-.section-container nav{
+.home-section nav{
     display: flex;
     justify-content: space-between;
     height: 80px;
     background: #fff;
+    display: flex;
     align-items: center;
     position: fixed;
     width: calc(100% - 240px);
@@ -301,24 +98,21 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     transition: all 0.5s ease;
 }
-
-.sidebar.active ~ .section-container nav{
+.sidebar.active ~ .home-section nav{
     left: 60px;
     width: calc(100% - 60px);
 }
-
-.section-container nav .sidebar-button{
+.home-section nav .sidebar-button{
     display: flex;
     align-items: center;
     font-size: 24px;
     font-weight: 500;
 }
-
 nav .sidebar-button i{
     font-size: 35px;
     margin-right: 10px;
 }
-.section-container nav .search-box{
+.home-section nav .search-box{
     position: relative;
     height: 50px;
     max-width: 550px;
@@ -348,9 +142,9 @@ nav .search-box .bx-search{
     text-align: center;
     color: #fff;
     font-size: 22px;
-    /*transition: all 0.4 ease;*/
+    transition: all 0.4 ease;
 }
-.section-container nav .profile-details{
+.home-section nav .profile-details{
     display: flex;
     align-items: center;
     background: #F5F6FA;
@@ -377,10 +171,7 @@ nav .profile-details i{
     font-size: 25px;
     color: #333;
 }
-
-/*-------------------------------*/
-
-.section-container .content{
+.home-section .content{
     position: relative;
     padding-top: 104px;
 }
@@ -477,19 +268,20 @@ nav .profile-details i{
     .sidebar.active{
         width: 220px;
     }
-    .section-container{
+    .home-section{
         width: calc(100% - 60px);
         left: 60px;
     }
-    .sidebar.active ~ .section-container{
+    .sidebar.active ~ .home-section{
+        /* width: calc(100% - 220px); */
         overflow: hidden;
         left: 220px;
     }
-    .section-container nav{
+    .home-section nav{
         width: calc(100% - 60px);
         left: 60px;
     }
-    .sidebar.active ~ .section-container nav{
+    .sidebar.active ~ .home-section nav{
         width: calc(100% - 220px);
         left: 220px;
     }
@@ -508,7 +300,7 @@ nav .profile-details i{
     nav .profile-details i{
         display: none;
     }
-    .section-container nav .profile-details{
+    .home-section nav .profile-details{
         height: 50px;
         min-width: 40px;
     }
@@ -519,7 +311,7 @@ nav .profile-details i{
         width: 100%;
         margin-bottom: 15px;
     }
-    .sidebar.active ~ .section-container nav .profile-details{
+    .sidebar.active ~ .home-section nav .profile-details{
         display: none;
     }
 }
@@ -530,26 +322,152 @@ nav .profile-details i{
     .sidebar.active{
         width: 60px;
     }
-    .section-container{
+    .home-section{
         width: 100%;
         left: 0;
     }
-    .sidebar.active ~ .section-container{
+    .sidebar.active ~ .home-section{
         left: 60px;
         width: calc(100% - 60px);
     }
-    .section-container nav{
+    .home-section nav{
         width: 100%;
         left: 0;
     }
-    .sidebar.active ~ .section-container nav{
+    .sidebar.active ~ .home-section nav{
         left: 60px;
         width: calc(100% - 60px);
     }
 }
 
-#branch-setUp{
-    margin-top: -600px;
+thead th {
+    color: #fff;
 }
 
-/*-------------------------------*/
+.card {
+    border-radius: .5rem;
+}
+
+.table-scroll {
+    border-radius: .5rem;
+}
+
+.icon{
+    background-color: #e05260;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.add-btn {
+    margin-top: 20px;
+}
+
+#home{
+    display: none;
+}
+
+#customer{
+    display: block;
+}
+
+#product{
+    display: none;
+}
+
+#order{
+    display: none;
+}
+
+#settings{
+    display: none;
+}
+
+/* Custom styles for form select */
+.form-selects {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* Style when the select is focused */
+.form-selects:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Style for selected option */
+.form-selects option {
+    color: #495057;
+    background-color: #fff;
+}
+
+/* Style for the dropdown arrow */
+.form-selects::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Style for the disabled state */
+.form-selects:disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+/* Style for the disabled options */
+.form-selects:disabled option {
+    color: #6c757d;
+}
+
+.overview{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.cards {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .cards {
+        width: 30%;
+    }
+}
+
+.input-group-text.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.input-group-text.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: #fff;
+}
+
+.center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
