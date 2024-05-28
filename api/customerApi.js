@@ -1,6 +1,5 @@
 export class CustomerApi {
 
-    // Function to handle common logic for HTTP requests
     async handleHttpRequest(url, method, data = null) {
         try {
             const response = await fetch(url, {
@@ -26,38 +25,27 @@ export class CustomerApi {
         }
     }
 
-    // Updated getAllCustomer using Fetch API
     async getAllCustomer() {
-        return this.handleHttpRequest("http://localhost:8080/poss/customer?action=getAllCustomers", "GET");
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/customer", "GET");
     }
 
-    // Updated delete Customer using Fetch API
     async deleteCustomer(custId) {
-        return this.handleHttpRequest(`http://localhost:8080/poss/customer?customerId=${custId}`, "DELETE");
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/customer/${custId}`, "DELETE");
     }
 
-    // Updated generateCustomerId using Fetch API
     async generateCustomerId() {
         return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/customer/nextCustId", "GET");
     }
 
-    // Updated updateCustomer using Fetch API
-    async updateCustomer(customer) {
-        return this.handleHttpRequest("http://localhost:8080/poss/customer", "PUT", customer);
+    async updateCustomer(customer,customerId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/customer/${customerId}`, "PUT", customer);
     }
 
-    // Updated saveCustomer using Fetch API
     async saveCustomer(customer) {
-        return this.handleHttpRequest("http://localhost:8080/poss/customer", "POST", customer);
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/customer", "POST", customer);
     }
 
-    // Updated getCustomer using Fetch API
-    async getCustomer(custId) {
-        return this.handleHttpRequest(`http://localhost:8080/poss/customer?action=getCustomer&customerId=${custId}`, "GET");
+    async getCustomer(customerId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/customer/${customerId}`, "GET");
     }
-
-    async getAllCustomerIds(){
-        return this.handleHttpRequest(`http://localhost:8080/poss/customer?action=getAllCustomerIds`, "GET");
-    }
-
 }
