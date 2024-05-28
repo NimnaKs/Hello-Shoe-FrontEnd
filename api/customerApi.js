@@ -18,7 +18,7 @@ export class CustomerApi {
                     return await response.text();
                 }
             } else {
-                throw new Error(`HTTP request failed with status ${response.status}`);
+                throw new Error(await response.text());
             }
         } catch (error) {
             throw new Error(`Error during HTTP request: ${error.message}`);

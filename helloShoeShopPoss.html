@@ -335,6 +335,169 @@
                 </div>
             </section>
         </div>
+
+        <div class="supplier-content" id="supplier">
+            <section class="intro">
+                <div class="bg-image h-100" style="background-color: #f5f7fa;">
+                    <div class="mask d-flex align-items-center h-100">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body p-0">
+                                            <div class="table-responsive table-scroll"
+                                                 style="position: relative; height: 500px;">
+                                                <table class="table table-striped mb-0">
+                                                    <thead style="background-color: #002d72; text-align: center;">
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Category</th>
+                                                        <th scope="col">Address</th>
+                                                        <th scope="col">Postal Code</th>
+                                                        <th scope="col">Country</th>
+                                                        <th scope="col">Contact No 1</th>
+                                                        <th scope="col">Contact No 2</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Update</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="sup-table-body">
+                                                    <!-- Dynamic data goes here -->
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-success add-btn" style="width: 200px;"
+                                                data-toggle="modal" data-target="#supplierModal" id="supAddBtn">
+                                            Add New Supplier
+                                        </button>
+
+                                        <div class="modal fade" id="supplierModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <form id="supplierForm">
+                                                            <h4 id="supplierFormHeading">Add New Supplier</h4>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-id">Supplier ID</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="sup-id"
+                                                                           placeholder="Enter Supplier ID" required
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-name">Supplier Name</label>
+                                                                    <input type="text" class="form-control" id="sup-name"
+                                                                           placeholder="Enter Full Supplier Name" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-category">Category</label>
+                                                                    <select class="form-control" id="sup-category" required>
+                                                                        <option value="">Select Category</option>
+                                                                        <option value="INTERNATIONAL">International</option>
+                                                                        <option value="LOCAL">Local</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-address1">Address Line 1</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="sup-address1"
+                                                                           placeholder="Enter Address Line 1" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-address2">Address Line 2</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="sup-address2"
+                                                                           placeholder="Enter Address Line 2" required>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-address3">Address Line 3</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="sup-address3"
+                                                                           placeholder="Enter Address Line 3" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-address4">Address Line 4</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="sup-address4"
+                                                                           placeholder="Enter Address Line 4" required>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-postalCode">Postal Code</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="sup-postalCode"
+                                                                           placeholder="Enter Postal Code"
+                                                                           pattern="\d{5}" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-country">Country</label>
+                                                                    <select class="form-control" id="sup-country" required>
+                                                                        <option value="">Select Country</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-contact-1">Contact No 1</label>
+                                                                    <input type="tel" class="form-control" id="sup-contact-1"
+                                                                           placeholder="Enter Contact No 1"
+                                                                           pattern="^\+?[0-9\-\\s]+$" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-contact-2">Contact No 2</label>
+                                                                    <input type="tel" class="form-control" id="sup-contact-2"
+                                                                           placeholder="Enter Contact No 2"
+                                                                           pattern="^\+?[0-9\-\\s]+$" required>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sup-email">Email</label>
+                                                                    <input type="email" class="form-control" id="sup-email"
+                                                                           placeholder="Enter Email" required>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success"
+                                                                    id="sup-save-update-btn">Save
+                                                            </button>
+                                                            <button type="button" class="btn btn-dark" id="supClear">
+                                                                Clear
+                                                            </button>
+                                                            <button hidden type="reset" class="btn btn-dark"
+                                                                    id="supReset">Reset
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
     </div>
 
 </section>
@@ -346,6 +509,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="module" src="controller/customerController.js"></script>
+<script type="module" src="controller/supplierController.js"></script>
 
 </body>
 </html>

@@ -381,8 +381,8 @@ thead th {
     display: none;
 }
 
-#settings{
-    display: none;
+#supplier{
+    display: block;
 }
 
 /* Custom styles for form select */

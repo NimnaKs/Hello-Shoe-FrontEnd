@@ -28,8 +28,6 @@ $(document).ready(function () {
 
     let tableBody = $('#cust-table-body');
 
-    let tableBodyRow = $("#cust-table-body tr");
-
     let search = $('#searchInput');
 
     let customerApi = new CustomerApi();
@@ -97,6 +95,8 @@ $(document).ready(function () {
             null
         );
 
+        console.log(customerModel);
+
         if (custSaveUpdateBtn.text() === 'Save') {
             customerApi.saveCustomer(customerModel)
                 .then((responseText) => {
@@ -138,21 +138,6 @@ $(document).ready(function () {
             footer: '<a href="">Why do I have this issue?</a>'
         });
     }
-
-    /*function validation(value, message, test) {
-        if (!value) {
-            showError('Null Input', 'Input ' + message);
-            return false;
-        }
-        if (test === null) {
-            return true;
-        }
-        if (!test) {
-            showError('Invalid Input', 'Invalid Input ' + message);
-            return false;
-        }
-        return true;
-    }*/
 
     function populateCustomerTable() {
         customerApi.getAllCustomer()
