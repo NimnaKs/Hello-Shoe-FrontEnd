@@ -412,6 +412,7 @@ $(document).ready(function () {
                     )
                     sizeClear.click();
                     populateSizeTable();
+                    generateSizeId();
                 })
                 .catch((error) => {
                     showError('Save Unsuccessful', error);
