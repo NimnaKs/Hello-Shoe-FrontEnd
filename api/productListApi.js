@@ -28,7 +28,7 @@ export class ProductListApi {
         return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/genderSave", "POST", genderModel);
     }
 
-    async updateGender(genderModel,genId) {
+    async updateGender(genderModel, genId) {
         return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/genderUpdate?id=${genId}`, "PUT", genderModel);
     }
 
@@ -38,5 +38,60 @@ export class ProductListApi {
 
     async deleteGender(genId) {
         return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/genderDelete?id=${genId}`, "DELETE");
+    }
+
+    // Occasion API
+    async saveOccasion(occasionModel) {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/occasionSave", "POST", occasionModel);
+    }
+
+    async updateOccasion(occasionModel, occId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/occasionUpdate?id=${occId}`, "PUT", occasionModel);
+    }
+
+    async getAllOccasions() {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/occasionGetAll", "GET");
+    }
+
+    async deleteOccasion(occId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/occasionDelete?id=${occId}`, "DELETE");
+    }
+
+    // Variety API
+    async saveVariety(varietyModel) {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/varietySave", "POST", varietyModel);
+    }
+
+    async updateVariety(varietyModel, varId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/varietyUpdate?id=${varId}`, "PUT", varietyModel);
+    }
+
+    async getAllVarieties() {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/varietyGetAll", "GET");
+    }
+
+    async deleteVariety(varId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/varietyDelete?id=${varId}`, "DELETE");
+    }
+
+    // Size API
+    async saveSize(sizeModel) {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/sizeSave", "POST", sizeModel);
+    }
+
+    async updateSize(sizeModel, sizeId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/sizeUpdate?id=${sizeId}`, "PUT", sizeModel);
+    }
+
+    async getAllSizes() {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/sizeGetAll", "GET");
+    }
+
+    async deleteSize(sizeId) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/sizeDelete?id=${sizeId}`, "DELETE");
+    }
+
+    generateSizeId() {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/nextSizeId`, "GET");
     }
 }
