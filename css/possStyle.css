@@ -593,3 +593,18 @@ thead th {
 .product-links a:hover {
     color: #fbb72c;
 }
+
+.btn-sky-blue {
+    background-color: #2697FF;
+    border: none;
+    color: white;
+}
+
+.btn-sky-blue:hover {
+    background-color: #2697FF;
+}
+
+.bx-folder-open {
+    color: white;
+    font-size: 18px;
+}

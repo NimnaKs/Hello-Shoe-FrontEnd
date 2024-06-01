@@ -60,5 +60,3 @@ let countries = [
     "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia",
     "Zimbabwe"
 ];
-
-

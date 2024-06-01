@@ -91,7 +91,10 @@ export class ProductListApi {
         return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/sizeDelete?id=${sizeId}`, "DELETE");
     }
 
-    generateSizeId() {
+    async generateSizeId() {
         return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/nextSizeId`, "GET");
     }
 }
+
+
+
