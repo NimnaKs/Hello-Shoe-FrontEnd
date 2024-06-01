@@ -31,6 +31,9 @@ $(document).ready(function () {
     let itemCodeUpdate = null
 
     function openItemModal(headingText, buttonText, buttonClass) {
+        itemGender.prop('disabled', false);
+        itemOccasion.prop('disabled', false);
+        itemVariety.prop('disabled', false);
         itemFormHeading.text(headingText);
         itemSaveUpdateBtn.text(buttonText);
         itemSaveUpdateBtn.removeClass('btn-success btn-warning').addClass(buttonClass);
@@ -121,14 +124,38 @@ $(document).ready(function () {
         updateImagePreview('img/previewImg.jpg');
     });
 
+    function handleUpdateAndSave() {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function () {
+            const itemBase64 = reader.result;
+            const product = createProductModel(itemBase64);
+
+            productApi.updateProduct(product, itemCodeUpdate)
+                .then(response => {
+                    Swal.fire('Updated!', response, 'success');
+                    itemClear.click();
+                    fetchAllProducts();
+                })
+                .catch(error => {
+                    showError('Update Unsuccessful', error);
+                });
+        };
+    }
+
     itemSaveUpdateBtn.on('click', function (event) {
         event.preventDefault();
 
         if (itemSaveUpdateBtn.text() === 'Save') {
             handleSave();
-        } else {
+        } if (itemSaveUpdateBtn.text() === 'Update' && file != null){
+            handleUpdateAndSave();
+        }else {
             handleUpdate();
         }
+
+        fetchAllProducts();
     });
     function handleSave() {
         const reader = new FileReader();
