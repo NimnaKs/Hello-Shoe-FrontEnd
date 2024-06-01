@@ -45,4 +45,15 @@ export class ProductApi {
     getAllProducts() {
         return this.sendAjaxRequest("http://localhost:9090/helloShoeShop/api/v1/inventory/getAllItems", "GET");
     }
+
+    updateProduct(product, itemCodeUpdate) {
+        const formData = new FormData();
+        formData.append("itemDesc", product.itemDesc);
+        formData.append("pic", product.pic);
+        return this.sendAjaxRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/${itemCodeUpdate}`, "PUT",formData);
+    }
+
+    deleteProduct(itemCodeDel) {
+        return this.sendAjaxRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/${itemCodeDel}`, "DELETE");
+    }
 }

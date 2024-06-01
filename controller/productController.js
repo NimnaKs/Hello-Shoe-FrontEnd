@@ -19,12 +19,16 @@ $(document).ready(function () {
     let fileInput = $('#file-input');
     let itemAddBtn = $('#itemAddBtn');
     let browseBtn = $('#browse-btn');
-    let updateBtn =$('#update-icon');
+    let updateBtn = $('#update-icon');
 
     let productApi = new ProductApi();
     let productListApi = new ProductListApi();
 
     let file = null;
+
+    let itemBase64Update = null;
+
+    let itemCodeUpdate = null
 
     function openItemModal(headingText, buttonText, buttonClass) {
         itemFormHeading.text(headingText);
@@ -89,6 +93,7 @@ $(document).ready(function () {
         populateOccasionComboBox();
         populateVarietyComboBox();
     });
+
     function showError(title, text) {
         Swal.fire({
             icon: 'error',
@@ -117,55 +122,63 @@ $(document).ready(function () {
     });
 
     itemSaveUpdateBtn.on('click', function (event) {
-
         event.preventDefault();
 
+        if (itemSaveUpdateBtn.text() === 'Save') {
+            handleSave();
+        } else {
+            handleUpdate();
+        }
+    });
+    function handleSave() {
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
         reader.onload = function () {
             const itemBase64 = reader.result;
-            console.log(itemBase64);
-            let itemDetail= itemDesc.val();
-            let itemImg = itemBase64;
-            let itemGen = itemGender.val();
-            let itemOsion = itemOccasion.val();
-            let itemVar = itemVariety.val();
+            const product = createProductModel(itemBase64);
 
-
-            const product = new ProductModel(
-                null,
-                itemDetail,
-                itemImg,
-                itemGen,
-                itemOsion,
-                itemVar
-            );
-
-            if (itemSaveUpdateBtn.text() === 'Save') {
-                productApi.saveProduct(product)
-                    .then(response => {
-                        Swal.fire('Saved!', response, 'success');
-                        itemClear.click();
-                        /*fetchAllProducts();*/
-                    })
-                    .catch(error => {
-                        showError('Save Unsuccessful', error);
-                    });
-            } else {
-                /*productListApi.updateProduct(product, itemCode.val())
-                    .then(response => {
-                        Swal.fire('Updated!', response, 'success');
-                        itemClear.click();
-                        fetchAllProducts();
-                    })
-                    .catch(error => {
-                        showError('Update Unsuccessful', error);
-                    });*/
-            }
+            productApi.saveProduct(product)
+                .then(response => {
+                    Swal.fire('Saved!', response, 'success');
+                    itemClear.click();
+                    // fetchAllProducts(); // Uncomment if needed
+                })
+                .catch(error => {
+                    showError('Save Unsuccessful', error);
+                });
         };
+    }
 
-    });
+    function handleUpdate() {
+        const product = createProductModel(itemBase64Update);
+
+        productApi.updateProduct(product, itemCodeUpdate)
+            .then(response => {
+                Swal.fire('Updated!', response, 'success');
+                itemClear.click();
+                fetchAllProducts();
+            })
+            .catch(error => {
+                showError('Update Unsuccessful', error);
+            });
+    }
+
+    function createProductModel(imageBase64) {
+        let itemDetail = itemDesc.val();
+        let itemGen = itemGender.val();
+        let itemOsion = itemOccasion.val();
+        let itemVar = itemVariety.val();
+
+        return new ProductModel(
+            null,
+            itemDetail,
+            imageBase64,
+            itemGen,
+            itemOsion,
+            itemVar
+        );
+    }
 
     function fetchAllProducts() {
         productApi.getAllProducts()
@@ -191,6 +204,7 @@ $(document).ready(function () {
                         <div class="product-bottom-details">
                             <div class="product-links">
                                 <button type="button" class="update-icon btn btn-link" 
+                                    data-code="${product.itemCode}"
                                     data-desc="${product.itemDesc}" 
                                     data-category="${product.varietyEntity.varietyDesc}" 
                                     data-gender="${product.genderEntity.genderDesc}" 
@@ -198,7 +212,8 @@ $(document).ready(function () {
                                     data-pic="${product.pic}" data-toggle="modal" data-target="#itemModal">
                                     <i class="bx bx-edit"></i>
                                 </button>
-                                <button type="button" class="delete-icon btn btn-link">
+                                <button type="button" class="delete-icon btn btn-link"
+                                data-code="${product.itemCode}">
                                     <i class="bx bx-trash"></i>
                                 </button>
                             </div>
@@ -222,11 +237,13 @@ $(document).ready(function () {
         comboBox.val(value).prop('disabled', true);
     }
 
-    $('#item-cards-container').on('click', '.update-icon', function(event) {
+    $('#item-cards-container').on('click', '.update-icon', function (event) {
         event.preventDefault();
         console.log('update btn call');
 
+        itemCodeUpdate = $(this).data('code');
         let proPic = $(this).data('pic');
+        itemBase64Update = proPic;
         let itemDetails = $(this).data('desc');
         let category = $(this).data('category');
         let gender = $(this).data('gender');
@@ -243,6 +260,39 @@ $(document).ready(function () {
         updateImagePreview(proPic);
     });
 
+    $('#item-cards-container').on('click', '.delete-icon', function (event) {
+        let itemCodeDel = $(this).data('code');
+        deleteCustomer(itemCodeDel);
+    });
+
+    function deleteCustomer(itemCodeDel) {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                productApi.deleteProduct(itemCodeDel)
+                    .then((responseText) => {
+                        Swal.fire(
+                            responseText,
+                            'Successful',
+                            'success'
+                        )
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        showError('Product delete Unsuccessful', error);
+                    });
+            }
+        });
+
+    }
 
     fetchAllProducts();
 });
