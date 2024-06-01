@@ -385,6 +385,10 @@ thead th {
     display: none;
 }
 
+#stock{
+    display: block;
+}
+
 /* Custom styles for form select */
 .form-selects {
     display: block;
@@ -631,4 +635,7 @@ thead th {
     color: #ff4c4c; /* Delete icon color */
 }
 
+#product{
+    display: none;
+}
 
