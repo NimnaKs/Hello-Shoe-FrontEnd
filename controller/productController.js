@@ -19,6 +19,7 @@ $(document).ready(function () {
     let fileInput = $('#file-input');
     let itemAddBtn = $('#itemAddBtn');
     let browseBtn = $('#browse-btn');
+    let updateBtn =$('#update-icon');
 
     let productApi = new ProductApi();
     let productListApi = new ProductListApi();
@@ -169,29 +170,43 @@ $(document).ready(function () {
     function fetchAllProducts() {
         productApi.getAllProducts()
             .then(response => {
+                console.log("API response:", response); // Log the response
                 let products = response;
                 $('#item-cards-container').empty();
 
                 products.forEach(product => {
-
                     let card = `
-                        <div class="col-md-4 mb-4">
-                            <div class="product-card">
-                                <div class="product-tumb">
-                                    <img src=${product.pic} alt="Product Image" id="img-product">
-                                </div>
-                                <div class="product-details">
-                                    <span class="product-catagory">Category: ${product.varietyEntity.varietyDesc}</span>
-                                    <h4><a href="#">${product.itemDesc}</a></h4>
-                                    <p><strong>Item Code:</strong> ${product.itemCode}</p>
-                                    <p><strong>Gender:</strong> ${product.genderEntity.genderDesc}</p>
-                                    <p><strong>Occasion:</strong> ${product.occasionEntity.occasionDesc}</p>
-                                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="product-tumb">
+                            <img src="${product.pic}" alt="Product Image">
+                        </div>
+                        <div class="product-details">
+                            <span class="product-catagory">Category: ${product.varietyEntity.varietyDesc}</span>
+                            <h4><a href="#">${product.itemDesc}</a></h4>
+                            <p><strong>Item Code:</strong> ${product.itemCode}</p>
+                            <p><strong>Gender:</strong> ${product.genderEntity.genderDesc}</p>
+                            <p><strong>Occasion:</strong> ${product.occasionEntity.occasionDesc}</p>
+                        </div>
+                        <div class="product-bottom-details">
+                            <div class="product-links">
+                                <button type="button" class="update-icon btn btn-link" 
+                                    data-desc="${product.itemDesc}" 
+                                    data-category="${product.varietyEntity.varietyDesc}" 
+                                    data-gender="${product.genderEntity.genderDesc}" 
+                                    data-occasion="${product.occasionEntity.occasionDesc}" 
+                                    data-pic="${product.pic}" data-toggle="modal" data-target="#itemModal">
+                                    <i class="bx bx-edit"></i>
+                                </button>
+                                <button type="button" class="delete-icon btn btn-link">
+                                    <i class="bx bx-trash"></i>
+                                </button>
                             </div>
                         </div>
-            `;
+                    </div>
+                </div>
+                `;
                     $('#item-cards-container').append(card);
-
                 });
             })
             .catch(error => {
@@ -200,53 +215,34 @@ $(document).ready(function () {
             });
     }
 
-
-
-    /*function editItem(itemId) {
-        productListApi.getProductById(itemId)
-            .then(response => {
-                let product = JSON.parse(response);
-                openItemModal('Edit Item', 'Update', 'btn-warning');
-
-                itemCode.val(product.itemCode);
-                itemDesc.val(product.itemDesc);
-                itemPic.val(product.itemPic);
-                itemGender.val(product.itemGender);
-                itemOccasion.val(product.itemOccasion);
-                itemVariety.val(product.itemVariety);
-                updateImagePreview(product.itemPic);
-
-                populateGenderComboBox();
-                populateOccasionComboBox();
-                populateVarietyComboBox();
-            })
-            .catch(error => {
-                showError('Fetch Unsuccessful', error);
-            });
+    function setComboBoxValue(comboBox, value) {
+        if (comboBox.find(`option[value="${value}"]`).length === 0) {
+            comboBox.append(`<option value="${value}" class="temp-option">${value}</option>`);
+        }
+        comboBox.val(value).prop('disabled', true);
     }
 
-    function deleteItem(itemId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                productListApi.deleteProduct(itemId)
-                    .then(response => {
-                        Swal.fire('Deleted!', response, 'success');
-                        fetchAllProducts();
-                    })
-                    .catch(error => {
-                        showError('Delete Unsuccessful', error);
-                    });
-            }
-        });
-    }*/
+    $('#item-cards-container').on('click', '.update-icon', function(event) {
+        event.preventDefault();
+        console.log('update btn call');
+
+        let proPic = $(this).data('pic');
+        let itemDetails = $(this).data('desc');
+        let category = $(this).data('category');
+        let gender = $(this).data('gender');
+        let occasion = $(this).data('occasion');
+
+        openItemModal('Edit Item', 'Update', 'btn-warning');
+        itemForm[0].reset();
+
+        itemDesc.val(itemDetails);
+        setComboBoxValue(itemVariety, category);
+        setComboBoxValue(itemGender, gender);
+        setComboBoxValue(itemOccasion, occasion);
+
+        updateImagePreview(proPic);
+    });
+
 
     fetchAllProducts();
 });
