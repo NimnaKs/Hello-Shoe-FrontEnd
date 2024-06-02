@@ -27,6 +27,7 @@ $(document).ready(function () {
     let empBrowseBtn = $('#emp-browse-btn');
     let fileInput = $('#emp-file-input');
     let empImagePreview = $('#emp-image-preview');
+    let search = $('#searchInput');
 
     let employeeApi = new EmployeeApi();
 
@@ -218,4 +219,12 @@ $(document).ready(function () {
                 showError('Fetch Unsuccessful', error);
             });
     });
+
+    search.on("input", function () {
+        let value = $(this).val().toLowerCase();
+        $("#emp-table-body tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+
 });
