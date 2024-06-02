@@ -1128,11 +1128,11 @@
                                                 <div class="modal-content">
                                                     <div class="modal-body">
                                                         <form id="employeeForm">
-                                                            <h4 id="employeeFormHeading">Add New Employee</h4>
+                                                            <h4 id="employeeFormHeading">Update Employee</h4>
                                                             <div class="form-row">
                                                                 <div class="form-group col-12 text-center">
                                                                     <img id="emp-image-preview"
-                                                                         src="img/previewImg.jpg"
+                                                                         src="img/noImageUser.jpg"
                                                                          alt="Item Image" class="img-fluid mb-3"
                                                                          style="max-height: 200px;">
                                                                 </div>
@@ -1172,7 +1172,12 @@
                                                             <div class="form-row">
                                                                 <div class="form-group col-md-6">
                                                                     <label for="status">Status</label>
-                                                                    <input type="text" class="form-control" id="status" placeholder="Enter Status">
+                                                                    <select class="form-control" id="status" required>
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="LOW">Low</option>
+                                                                        <option value="AVAILABLE">Available</option>
+                                                                        <option value="NOTAVAILABLE">Not Available</option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="designation">Designation</label>
@@ -1249,7 +1254,7 @@
                                                                     <input type="tel" class="form-control" id="emergencyContact" placeholder="Enter Emergency Contact" pattern="^\+?[0-9\-\\s]+$" required>
                                                                 </div>
                                                             </div>
-                                                            <button type="submit" class="btn btn-success" id="empSaveUpdateButton">Save</button>
+                                                            <button type="submit" class="btn btn-warning" id="empUpdateBtn">Update</button>
                                                             <button type="button" class="btn btn-dark" id="empClear">Clear</button>
                                                             <button hidden type="reset" class="btn btn-dark" id="empReset">Reset</button>
                                                         </form>
@@ -1268,7 +1273,6 @@
                 </div>
             </section>
         </div>
-
 
     </div>
 

@@ -1,7 +1,7 @@
 import {EmployeeApi} from "../api/employeeApi.js";
+
 $(document).ready(function () {
     let employeeForm = $('#employeeForm');
-    let employeeFormHeading = $('#employeeFormHeading');
     let employeeCode = $('#employeeCode');
     let employeeName = $('#employeeName');
     let empPic = $('#emp-pic');
@@ -21,13 +21,12 @@ $(document).ready(function () {
     let empEmail = $('#empEmail');
     let emergencyContactPerson = $('#emergencyContactPerson');
     let emergencyContact = $('#emergencyContact');
-    let empSaveUpdateButton = $('#empSaveUpdateButton');
+    let empUpdate = $('#empUpdateBtn');
     let empClear = $('#empClear');
     let empReset = $('#empReset');
     let empBrowseBtn = $('#emp-browse-btn');
     let fileInput = $('#emp-file-input');
     let empImagePreview = $('#emp-image-preview');
-    let updateBtn = $('#update-icon');
 
     let employeeApi = new EmployeeApi();
 
@@ -35,72 +34,9 @@ $(document).ready(function () {
 
     let employeeBase64Update = null;
 
-    let employeeCodeUpdate = null;
-
-    function openEmployeeModal(headingText, buttonText, buttonClass) {
-        employeeGender.prop('disabled', false);
-        employeeFormHeading.text(headingText);
-        empSaveUpdateButton.text(buttonText);
-        empSaveUpdateButton.removeClass('btn-success btn-warning').addClass(buttonClass);
-    }
-
     function updateImagePreview(imgPath) {
         empImagePreview.attr('src', imgPath);
     }
-
-    function populateComboBox(comboBoxId, data, valueField, textField, defaultOption) {
-        let comboBox = document.getElementById(comboBoxId);
-        comboBox.innerHTML = `<option value="">${defaultOption}</option>`;
-
-        data.forEach(item => {
-            let option = document.createElement('option');
-            option.value = item[valueField];
-            option.text = item[textField];
-            comboBox.add(option);
-        });
-    }
-
-    function populateGendersComboBox() {
-        employeeListApi.getAllGenders()
-            .then(response => {
-                populateComboBox('emp-gender', response, 'genderCode', 'genderDesc', 'Select Gender');
-            })
-            .catch(error => {
-                console.log(error);
-                showError('Fetch Unsuccessful', error);
-            });
-    }
-
-    function populateAccessRolesComboBox() {
-        employeeListApi.getAllAccessRoles()
-            .then(response => {
-                populateComboBox('accessRole', response, 'accessRoleCode', 'accessRoleDesc', 'Select Access Role');
-            })
-            .catch(error => {
-                console.log(error);
-                showError('Fetch Unsuccessful', error);
-            });
-    }
-
-    function populateBranchesComboBox() {
-        employeeListApi.getAllBranches()
-            .then(response => {
-                populateComboBox('attachedBranch', response, 'branchCode', 'branchDesc', 'Select Branch');
-            })
-            .catch(error => {
-                console.log(error);
-                showError('Fetch Unsuccessful', error);
-            });
-    }
-
-    $('#empAddBtn').on('click', function () {
-        openEmployeeModal('Add New Employee', 'Save', 'btn-success');
-        employeeForm[0].reset();
-        updateImagePreview('img/previewImg.jpg');
-        populateGendersComboBox();
-        populateAccessRolesComboBox();
-        populateBranchesComboBox();
-    });
 
     function showError(title, text) {
         Swal.fire({
@@ -129,49 +65,39 @@ $(document).ready(function () {
         updateImagePreview('img/previewImg.jpg');
     });
 
-    function handleUpdateAndSave() {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onload = function () {
-            const employeeBase64 = reader.result;
-            const employee = createEmployeeModel(employeeBase64);
-
-            employeeApi.updateEmployee(employee, employeeCodeUpdate)
-                .then(response => {
-                    Swal.fire('Updated!', response, 'success');
-                    empClear.click();
-                    fetchAllEmployees();
-                })
-                .catch(error =>{
-                    console.log(error);
-                    showError('Update Unsuccessful', error);
-                });
-        };
+    function updateEmployee(employeeModel) {
+        employeeApi.updateEmployee(employeeModel)
+            .then(response => {
+                console.log(employeeModel);
+                Swal.fire(
+                    response,
+                    'Successful',
+                    'success'
+                )
+                fetchAllEmployees();
+                empClear.click();
+            })
+            .catch(error => {
+                showError('Update Unsuccessful', error);
+                console.log(error)
+            });
     }
 
-    empSaveUpdateButton.on('click', function () {
-        if (empSaveUpdateButton.hasClass('btn-success')) {
+    empUpdate.on('click', function (event) {
+        event.preventDefault();
+        if (file != null) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
 
             reader.onload = function () {
                 const employeeBase64 = reader.result;
-                const employee = createEmployeeModel(employeeBase64);
-
-                employeeApi.saveEmployee(employee)
-                    .then(response => {
-                        Swal.fire('Saved!', response, 'uccess');
-                        empClear.click();
-                        fetchAllEmployees();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        showError('Save Unsuccessful', error);
-                    });
+                const employeeModel = createEmployeeModel(employeeBase64);
+                updateEmployee(employeeModel); // Move the update call here
             };
+
         } else {
-            handleUpdateAndSave();
+            const employeeModel = createEmployeeModel(employeeBase64Update);
+            updateEmployee(employeeModel);
         }
     });
 
@@ -179,7 +105,7 @@ $(document).ready(function () {
         return {
             employeeCode: employeeCode.val(),
             employeeName: employeeName.val(),
-            picture: employeeBase64,
+            pic: employeeBase64,
             gender: empGender.val(),
             status: status.val(),
             designation: designation.val(),
@@ -187,14 +113,14 @@ $(document).ready(function () {
             dateOfBirth: empDob.val(),
             joinDate: empJoinDate.val(),
             attachedBranch: attachedBranch.val(),
-            addressLine1: empAddress1.val(),
-            addressLine2: empAddress2.val(),
-            addressLine3: empAddress3.val(),
-            addressLine4: empAddress4.val(),
+            address1: empAddress1.val(),
+            address2: empAddress2.val(),
+            address3: empAddress3.val(),
+            address4: empAddress4.val(),
             postalCode: empPostalCode.val(),
-            contact: empContact.val(),
+            contactNo: empContact.val(),
             email: empEmail.val(),
-            emergencyContactPerson: emergencyContactPerson.val(),
+            emergencyContactName: emergencyContactPerson.val(),
             emergencyContact: emergencyContact.val()
         };
     }
@@ -202,84 +128,94 @@ $(document).ready(function () {
     function fetchAllEmployees() {
         employeeApi.getAllEmployees()
             .then(response => {
-                if (Array.isArray(response)) {
-                    const employeeTableBody = $('#emp-table-body');
-                    employeeTableBody.empty();
-                    console.log(response);
-                    response.forEach(employee => {
-                        const row = `
+                const employeeTableBody = $('#emp-table-body');
+                employeeTableBody.empty();
+                console.log(response);
+                response.forEach(employee => {
+                    const row = `
                         <tr>
                             <td class="row">${employee.employeeCode}</td>
-                            <td>${(employee.employeeName == null) ? 'Note Yet Updated' : employee.employeeName}</td>
-                            <td><img src="${(employee.picture == null) ? 'img/previewImg.jpg' : employee.picture}" alt="Employee Image" class="img-fluid" style="max-height: 50px;"></td>
-                            <td>${(employee.gender == null) ? 'Note Yet Updated' : employee.gender}</td>
+                            <td>${(employee.employeeName == null) ? 'Not Yet Updated' : employee.employeeName}</td>
+                            <td><img src="${(employee.pic == null) ? 'img/noImageUser.jpg' : employee.pic}" alt="Employee Image" class="img-fluid" style="max-height: 50px;"></td>
+                            <td>${(employee.gender == null) ? 'Not Yet Updated' : employee.gender}</td>
                             <td>${employee.status}</td>
-                            <td>${(employee.designation == null) ? 'Note Yet Updated' : employee.designation}</td>
+                            <td>${(employee.designation == null) ? 'Not Yet Updated' : employee.designation}</td>
                             <td>${employee.userEntity.role}</td>
-                            <td>${(employee.dateOfBirth == null) ? 'Note Yet Updated' : employee.dateOfBirth}</td>
+                            <td>${(employee.dateOfBirth == null) ? 'Not Yet Updated' : employee.dateOfBirth}</td>
                             <td>${employee.dateOfJoin}</td>
                             <td>${employee.branch.branchName}</td>
                             <td>
-                                ${(employee.addressLine1 == null ||
-                                employee.addressLine2 == null ||
-                                employee.addressLine3 == null ||
-                                employee.addressLine4 == null)
-                                ? 'Not Yet Updated'
-                                : `${employee.addressLine1}, ${employee.addressLine2}, ${employee.addressLine3}, ${employee.addressLine4}`
-                                }
+                                ${(employee.address1 == null ||
+                        employee.address2 == null ||
+                        employee.address3 == null ||
+                        employee.address4 == null)
+                        ? 'Not Yet Updated'
+                        : `${employee.address1}, ${employee.address2}, ${employee.address3}, ${employee.address4}`
+                    }
                             </td>
                             <td>${(employee.postalCode == null) ? 'Not Yet Updated' : employee.postalCode}</td>
-                            <td>${(employee.contact == null) ? 'Not Yet Updated' : employee.contact}</td>
+                            <td>${(employee.contactNo == null) ? 'Not Yet Updated' : employee.contactNo}</td>
                             <td>${employee.email}</td>
-                            <td>${(employee.emergencyContactPerson == null) ? 'Not Yet Updated' : employee.emergencyContactPerson}</td>
+                            <td>${(employee.emergencyContactName == null) ? 'Not Yet Updated' : employee.emergencyContactName}</td>
                             <td>${(employee.emergencyContact == null) ? 'Not Yet Updated' : employee.emergencyContact}</td>
                             <td>
-                                <button class="btn btn-warning" onclick="updateEmployee('${employee.employeeCode}')">Update</button>
+                                <button class="updateBtn btn btn-warning btn-sm" data-toggle="modal" data-target="#employeeModal"
+                                    data-employee-id="${employee.employeeCode}" data-employee-branch = "${employee.branch.branchName}" >
+                                    Edit
+                                </button>
                             </td>
                         </tr>
                     `;
-                        employeeTableBody.append(row);
-                    });
-                } else {
-                    console.log('Response is not an array:', response);
-                }
+                    employeeTableBody.append(row);
+                });
             })
             .catch(error => {
                 console.log(error);
                 showError('Fetch Unsuccessful', error);
             });
     }
+
     fetchAllEmployees();
 
-    function updateEmployee(employeeCode) {
-        employeeCodeUpdate = employeeCode;
-        openEmployeeModal('Update Employee', 'Update', 'btn-warning');
-        employeeListApi.getEmployee(employeeCode)
-            .then(response => {
-                employeeCode.val(response.employeeCode);
-                employeeName.val(response.employeeName);
-                empPic.val(response.picture);
-                updateImagePreview(response.picture);
-                empGender.val(response.gender);
-                status.val(response.status);
-                designation.val(response.designation);
-                accessRole.val(response.accessRole);
-                empDob.val(response.dateOfBirth);
-                empJoinDate.val(response.joinDate);
-                attachedBranch.val(response.attachedBranch);
-                empAddress1.val(response.addressLine1);
-                empAddress2.val(response.addressLine2);
-                empAddress3.val(response.addressLine3);
-                empAddress4.val(response.addressLine4);
-                empPostalCode.val(response.postalCode);
-                empContact.val(response.contact);
-                empEmail.val(response.email);
-                emergencyContactPerson.val(response.emergencyContactPerson);
-                emergencyContact.val(response.emergencyContact);
+    $('#emp-table-body').on('click', '.updateBtn', function () {
+        const employeeId = $(this).data('employee-id');
+        employeeApi.getEmployee(employeeId)
+            .then((responseText) => {
+                let employee = responseText;
+                employeeCode.val(employee.employeeCode);
+                employeeName.val(employee.employeeName);
+                if (employee.pic != null) {
+                    employeeBase64Update = employee.pic;
+                    empPic.val(employee.pic);
+                    updateImagePreview(employee.pic);
+                }
+                empAddress1.val(employee.address1);
+                empAddress2.val(employee.address2);
+                empAddress3.val(employee.address3);
+                empAddress4.val(employee.address4);
+                empPostalCode.val(employee.postalCode);
+                empContact.val(employee.contactNo);
+                empEmail.val(employee.email);
+                empDob.val(employee.dateOfBirth);
+                empGender.val(employee.gender);
+                empJoinDate.val(employee.dateOfJoin);
+                emergencyContactPerson.val(employee.emergencyContactName);
+                emergencyContact.val(employee.emergencyContact);
+                status.val(employee.status);
+                designation.val(employee.designation);
+                if (employee.designation === "Manager") {
+                    designation.prop('disabled', true);
+                    accessRole.append(`<option value="ADMIN" class="temp-option">Admin</option>`);
+                    accessRole.val('ADMIN');
+                } else {
+                    accessRole.append(`<option value="USER" class="temp-option">User</option>`);
+                    accessRole.val('USER');
+                }
+                attachedBranch.val($(this).data('employee-branch'));
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
                 showError('Fetch Unsuccessful', error);
             });
-    }
+    });
 });

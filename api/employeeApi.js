@@ -26,7 +26,31 @@ export class EmployeeApi {
             xhr.send(data);
         });
     }
-    getAllEmployees() {
+    async getAllEmployees() {
         return this.sendAjaxRequest("http://localhost:9090/helloShoeShop/api/v1/employee", "GET");
+    }
+
+    async getEmployee(employeeId) {
+        return this.sendAjaxRequest(`http://localhost:9090/helloShoeShop/api/v1/employee/${employeeId}`, "GET");
+    }
+
+    async updateEmployee(employeeModel) {
+        console.log(employeeModel);
+        const formData = new FormData();
+        formData.append('employeeName', employeeModel.employeeName);
+        formData.append('profilePic', employeeModel.pic);
+        formData.append('gender', employeeModel.gender);
+        formData.append('status', employeeModel.status);
+        formData.append('designation', employeeModel.designation);
+        formData.append('dateOfBirth', employeeModel.dateOfBirth);
+        formData.append('address1', employeeModel.address1);
+        formData.append('address2', employeeModel.address2);
+        formData.append('address3', employeeModel.address3);
+        formData.append('address4', employeeModel.address4);
+        formData.append('postalCode', employeeModel.postalCode);
+        formData.append('contactNo', employeeModel.contactNo);
+        formData.append('emergencyContactName', employeeModel.emergencyContactName);
+        formData.append('emergencyContact', employeeModel.emergencyContact);
+        return this.sendAjaxRequest(`http://localhost:9090/helloShoeShop/api/v1/employee/${employeeModel.employeeCode}`, "PUT",formData);
     }
 }
