@@ -366,7 +366,7 @@ thead th {
 }
 
 #home{
-    display: none;
+    display: block;
 }
 
 #customer{
@@ -377,6 +377,11 @@ thead th {
     display: none;
 }
 
+#product{
+    display: none;
+}
+
+
 #order{
     display: none;
 }
@@ -386,7 +391,7 @@ thead th {
 }
 
 #stock{
-    display: block;
+    display: none;
 }
 
 /* Custom styles for form select */
@@ -633,9 +638,5 @@ thead th {
 
 .product-links .delete-icon {
     color: #ff4c4c; /* Delete icon color */
-}
-
-#product{
-    display: none;
 }
 

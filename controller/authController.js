@@ -1,6 +1,7 @@
-import { SignInModel } from "../model/signInModel.js";
-import { AuthApi } from "../api/authApi.js";
-import { SignUpModel } from "../model/signUpModel.js";
+import {SignInModel} from "../model/signInModel.js";
+import {AuthApi} from "../api/authApi.js";
+import {SignUpModel} from "../model/signUpModel.js";
+import {BranchApi} from "../api/branchApi.js";
 
 const email = $('#signIn-email');
 const password = $('#signIn-password');
@@ -9,9 +10,29 @@ const signUpForm = $('#signUpForm');
 const signUpEmail = $('#signUp-email');
 const signUpPassword = $('#signUp-password');
 const signUpRole = $('#signUp-role');
+const branch = $('#signup-branch');
 
 const authApi = new AuthApi();
+const branchApi = new BranchApi();
 let globalToken = null;
+
+function populateBranchComboBox() {
+    branchApi.getAllBranch()
+        .then((responseText) => {
+            console.log(responseText);
+            responseText.forEach((branch) => {
+                $('#signup-branch').append(
+                    `<option value="${branch.branchId}">${branch.branchName}</option>`
+                );
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            showError('fetch Unsuccessful', error);
+        });
+}
+
+populateBranchComboBox();
 
 signInBtn.on('click', (event) => {
     event.preventDefault();
@@ -21,6 +42,8 @@ signInBtn.on('click', (event) => {
         .then(response => {
             globalToken = response.token;
             console.log(globalToken);
+            localStorage.setItem('authToken', globalToken);
+
             Swal.fire({
                 icon: 'success',
                 title: 'Signed In Successfully!',
@@ -28,16 +51,22 @@ signInBtn.on('click', (event) => {
                 footer: '<a href="">Proceed to Dashboard</a>',
                 showConfirmButton: false,
                 timer: 3000,
+            }).then(() => {
+                window.location.href = 'helloShoeShopPoss.html';
             });
-            email.val('');
-            password.val('');
         })
         .catch(error => showError('Sign In Unsuccessful', error.message));
 });
 
+
 signUpForm.on('submit', (event) => {
     event.preventDefault();
-    const user = new SignUpModel(signUpEmail.val(), signUpPassword.val(), signUpRole.val());
+    const user = new SignUpModel(
+        signUpEmail.val(),
+        signUpPassword.val(),
+        signUpRole.val(),
+        branch.val()
+    );
 
     authApi.signUp(user)
         .then(response => {

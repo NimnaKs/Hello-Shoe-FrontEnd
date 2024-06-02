@@ -60,3 +60,66 @@ let countries = [
     "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia",
     "Zimbabwe"
 ];
+
+const myFunction = function (i, page_name) {
+    let id = [
+        '#home_page', '#customer_page', '#product_page', '#product_list_page',
+        '#order_page', '#stock_page', '#supplier_page', '#return_page', '#employee_page'
+    ];
+    let loadingScreens = [
+        '#home', '#customer', '#product', '#product-list',
+        '#order', '#stock', '#supplier', '#return', '#employee'
+    ];
+
+    for (let j = 0; j < id.length; j++) {
+        if (i === j) {
+            $(loadingScreens[j]).css('display', 'block');
+            $(id[j]).addClass("active");
+            console.log(id[j])
+        } else {
+            $(loadingScreens[j]).css('display', 'none');
+            $(id[j]).removeClass("active");
+        }
+    }
+
+    $('.dashboard').text(page_name);
+}
+
+$(document).ready(function () {
+
+    $('#home_page').on('click', () => {
+        myFunction(0, 'Dashboard');
+    });
+
+    $('#customer_page').on('click', function () {
+        myFunction(1, 'Customer Details');
+    });
+
+    $('#product_page').on('click', function () {
+        myFunction(2, 'Product Details');
+    });
+
+    $('#product_list_page').on('click', function () {
+        myFunction(3, 'Product List');
+    });
+
+    $('#order_page').on('click', function () {
+        myFunction(4, 'Order Details');
+    });
+
+    $('#stock_page').on('click', function () {
+        myFunction(5, 'Stock Details');
+    });
+
+    $('#supplier_page').on('click', function () {
+        myFunction(6, 'Supplier Details');
+    });
+
+    $('#return_page').on('click', function () {
+        myFunction(7, 'Return Details');
+    });
+
+    $('#employee_page').on('click', function () {
+        myFunction(8, 'Employee Details');
+    });
+});

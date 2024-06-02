@@ -31,4 +31,8 @@ export class BranchApi {
     async save(branch) {
         return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/auth/branch", "POST", branch);
     }
+
+    async getAllBranch() {
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/auth", "GET");
+    }
 }
