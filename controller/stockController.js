@@ -1,4 +1,7 @@
 import { StockApi } from "../api/stockApi.js";
+import { SupplierApi } from "../api/supplierApi.js";
+import { ProductApi } from "../api/productApi.js";
+import { ProductListApi } from "../api/productListApi.js";
 import { StockModel } from "../model/stockModel.js";
 
 $(document).ready(function () {
@@ -28,6 +31,9 @@ $(document).ready(function () {
     let search = $('#searchInput');
 
     let stockApi = new StockApi();
+    let supplierApi = new SupplierApi();
+    let productApi = new ProductApi();
+    let productListApi = new ProductListApi();
 
     /*populateStockTable();*/
 
@@ -41,18 +47,98 @@ $(document).ready(function () {
             });
     }
 
+    function populateSupplierComboBox() {
+        supplierApi.getAllSuppliers()
+            .then((responseText) => {
+                supplierId.empty().append('<option value="">Select Supplier</option>');
+                responseText.forEach((supplier) => {
+                    supplierId.append(
+                        `<option value="${supplier.supplierName}">${supplier.supplierCode}</option>`
+                    );
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                showError('Fetch Unsuccessful', error);
+            });
+    }
+
+    function populateItemComboBox() {
+        productApi.getAllProducts()
+            .then((responseText) => {
+                itemId.empty().append('<option value="">Select Product</option>');
+                responseText.forEach((product) => {
+                    itemId.append(
+                        `<option value="${product.itemDesc}">${product.itemCode}</option>`
+                    );
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                showError('Fetch Unsuccessful', error);
+            });
+    }
+
+    function populateSizeComboBox() {
+        productListApi.getAllSizes()
+            .then((responseText) => {
+                sizeId.empty().append('<option value="">Select Size</option>');
+                responseText.forEach((size) => {
+                    sizeId.append(
+                        `<option value="${size.sizeDesc}">${size.sizeCode}</option>`
+                    );
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                showError('Fetch Unsuccessful', error);
+            });
+    }
+
+    function setOtherProps() {
+        supplyDate.val(new Date().toISOString().slice(0, 10));
+        populateSupplierComboBox();
+        populateItemComboBox();
+        populateSizeComboBox();
+    }
+
     stockAddBtn.on('click', function () {
         openStockModal('Add New Stock', 'Save', 'btn-success');
         stockForm[0].reset();
         generateStockId();
-        /*setOtherProps();*/
+        setOtherProps();
     });
 
-   /* stockClear.on('click', function () {
+    stockClear.on('click', function () {
         stockForm[0].reset();
     });
 
-    stockSaveUpdateBtn.on('click', function (event) {
+    supplierId.on('change', function () {
+        supplierName.val(supplierId.val());
+    });
+
+    itemId.on('change', function () {
+        itemDetails.val(itemId.val());
+    });
+
+    sizeId.on('change', function () {
+        sizeDetails.val(sizeId.val());
+    });
+
+    unitBuyingPrice.on('input', calculateProfitAndMargin);
+    unitSellingPrice.on('input', calculateProfitAndMargin);
+
+    function calculateProfitAndMargin() {
+        let buyingPrice = parseFloat(unitBuyingPrice.val()) || 0;
+        let sellingPrice = parseFloat(unitSellingPrice.val()) || 0;
+        let calculatedProfit = sellingPrice - buyingPrice;
+        let calculatedProfitMargin = (buyingPrice > 0) ? (calculatedProfit / buyingPrice) * 100 : 0;
+
+        profit.val(calculatedProfit.toFixed(2));
+        profitMargin.val(calculatedProfitMargin.toFixed(2));
+    }
+
+   /* stockSaveUpdateBtn.on('click', function (event) {
         event.preventDefault();
 
         let stockIdVal = stockId.val();
@@ -163,9 +249,9 @@ $(document).ready(function () {
                 console.log(error);
                 showError('Fetch Unsuccessful', error);
             });
-    }*/
+    }
 
-    /*tableBody.on('click', '.updateBtn', function () {
+    tableBody.on('click', '.updateBtn', function () {
         const stockId = $(this).data('stock-id');
         openStockModal('Update Stock', 'Update', 'btn-warning', stockId);
     });
@@ -173,7 +259,7 @@ $(document).ready(function () {
     tableBody.on('click', '.deleteBtn', function () {
         const stockId = $(this).data('stock-id');
         deleteStock(stockId);
-    });*/
+    });
 
     function deleteStock(stockId) {
         Swal.fire({
@@ -201,7 +287,7 @@ $(document).ready(function () {
                     });
             }
         });
-    }
+    }*/
 
     function openStockModal(headingText, buttonText, buttonClass, stockId) {
         if (stockId) {

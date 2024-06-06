@@ -28,4 +28,12 @@ export class StockApi {
     async generateStockId() {
         return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/supplier/nextStockId", "GET");
     }
+
+    getAllStocks() {
+        
+    }
+
+    deleteStock(stockId) {
+        
+    }
 }
