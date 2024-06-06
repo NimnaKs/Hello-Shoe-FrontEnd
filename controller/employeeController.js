@@ -135,7 +135,7 @@ $(document).ready(function () {
                 response.forEach(employee => {
                     const row = `
                         <tr>
-                            <td class="row">${employee.employeeCode}</td>
+                            <th row='span'>${employee.employeeCode}</th>
                             <td>${(employee.employeeName == null) ? 'Not Yet Updated' : employee.employeeName}</td>
                             <td><img src="${(employee.pic == null) ? 'img/noImageUser.jpg' : employee.pic}" alt="Employee Image" class="img-fluid" style="max-height: 50px;"></td>
                             <td>${(employee.gender == null) ? 'Not Yet Updated' : employee.gender}</td>

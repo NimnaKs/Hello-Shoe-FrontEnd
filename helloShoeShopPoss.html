@@ -853,31 +853,54 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-6">
+                                                                        <label for="item-details">Item Details</label>
+                                                                        <input type="number" class="form-control"
+                                                                               id="item-details"
+                                                                               placeholder="Item Details" required disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="size-Id-Cb">Size Id</label>
+                                                                        <select class="form-control" id="size-Id-Cb"
+                                                                                required>
+                                                                            <!-- Populate options dynamically using JavaScript -->
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="size-details">Size Details</label>
+                                                                        <input type="number" class="form-control"
+                                                                               id="size-details"
+                                                                               placeholder="Size Details" required disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6">
                                                                         <label for="qty">Quantity</label>
                                                                         <input type="number" class="form-control" id="qty"
                                                                                placeholder="Enter Quantity" required>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-row">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="unitBuyingPrice">Unit Buying Price</label>
                                                                         <input type="number" class="form-control"
                                                                                id="unitBuyingPrice"
                                                                                placeholder="Enter Unit Buying Price" required>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-row">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="unitSellingPrice">Unit Selling Price</label>
                                                                         <input type="number" class="form-control"
                                                                                id="unitSellingPrice"
                                                                                placeholder="Enter Unit Selling Price" required>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-row">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="profit">Profit</label>
                                                                         <input type="text" class="form-control" id="profit"
                                                                                placeholder="Enter Profit" required disabled>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-row">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="profitMargin">Profit Margin</label>
                                                                         <input type="number" class="form-control"
@@ -885,6 +908,7 @@
                                                                                required disabled>
                                                                     </div>
                                                                 </div>
+
                                                                 <button type="submit" class="btn btn-success"
                                                                         id="stock-save-update-btn">Save
                                                                 </button>
@@ -1289,6 +1313,7 @@
 <script type="module" src="controller/productListController.js"></script>
 <script type="module" src="controller/productController.js"></script>
 <script type="module" src="controller/employeeController.js"></script>
+<script type="module" src="controller/stockController.js"></script>
 
 </body>
 </html>
