@@ -44,12 +44,13 @@ signInBtn.on('click', (event) => {
             console.log(globalToken);
             localStorage.setItem('authToken', globalToken);
             localStorage.setItem('userEmail', email.val());
+            localStorage.setItem('userPassword', password.val());
 
             Swal.fire({
                 icon: 'success',
                 title: 'Signed In Successfully!',
                 text: 'Welcome back to HelloShoeShop!',
-                footer: '<a href="">Proceed to Dashboard</a>',
+                footer: '<a href="helloShoeShopPoss.html">Proceed to Dashboard</a>',
                 showConfirmButton: false,
                 timer: 3000,
             }).then(() => {

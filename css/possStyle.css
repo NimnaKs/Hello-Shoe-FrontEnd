@@ -632,3 +632,15 @@ thead th {
     margin-left: 5px;
 }
 
+.product-links .btn-link:hover {
+    color: #fbb72c;
+}
+
+.product-links .update-icon {
+    color: #00a2ff; /* Update icon color */
+}
+
+.product-links .delete-icon {
+    color: #ff4c4c; /* Delete icon color */
+}
+
