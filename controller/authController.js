@@ -41,7 +41,7 @@ signInBtn.on('click', (event) => {
     authApi.signIn(signInModel)
         .then(response => {
             globalToken = response.token;
-
+            console.log(globalToken);
             localStorage.setItem('authToken', globalToken);
             localStorage.setItem('userEmail', email.val());
 

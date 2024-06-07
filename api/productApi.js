@@ -5,7 +5,10 @@ export class ProductApi {
             const xhr = new XMLHttpRequest();
             xhr.open(method, url, true);
 
-            xhr.onload = function() {
+
+            xhr.setRequestHeader("Authorization", `Bearer ${localStorage.getItem("authToken")}`);
+
+            xhr.onload = function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
 
                     try {
@@ -19,7 +22,7 @@ export class ProductApi {
                 }
             };
 
-            xhr.onerror = function() {
+            xhr.onerror = function () {
                 reject(new Error("Network Error"));
             };
 
@@ -50,7 +53,7 @@ export class ProductApi {
         const formData = new FormData();
         formData.append("itemDesc", product.itemDesc);
         formData.append("pic", product.pic);
-        return this.sendAjaxRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/${itemCodeUpdate}`, "PUT",formData);
+        return this.sendAjaxRequest(`http://localhost:9090/helloShoeShop/api/v1/inventory/${itemCodeUpdate}`, "PUT", formData);
     }
 
     deleteProduct(itemCodeDel) {

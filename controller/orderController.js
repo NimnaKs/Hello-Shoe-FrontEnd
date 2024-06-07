@@ -7,6 +7,8 @@ $(document).ready(function () {
     let orderDate = $('#orderDate');
     let customerId = $('#customerId');
     let stockId = $('#stockId');
+    let search = $('#searchInput');
+    let searchBtn = $('#searchBtn');
 
     let orderApi = new OrderApi();
     let customerApi = new CustomerApi();
@@ -226,6 +228,9 @@ $(document).ready(function () {
             url: 'http://localhost:9090/helloShoeShop/api/v1/sale',
             method: 'POST',
             contentType: 'application/json',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("authToken")
+            },
             data: JSON.stringify(order),
             success: function () {
                 Swal.fire(
@@ -251,5 +256,11 @@ $(document).ready(function () {
             }
         });
     });
+
+    searchBtn.on('click',()=>{
+        let searchInput = search.val();
+
+
+    })
 
 });

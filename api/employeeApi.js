@@ -5,6 +5,8 @@ export class EmployeeApi {
             const xhr = new XMLHttpRequest();
             xhr.open(method, url, true);
 
+            xhr.setRequestHeader("Authorization", `Bearer ${localStorage.getItem("authToken")}`);
+
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 300) {
 

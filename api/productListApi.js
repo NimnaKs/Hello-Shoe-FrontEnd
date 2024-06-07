@@ -5,6 +5,7 @@ export class ProductListApi {
                 method: method,
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("authToken")
                 },
                 body: data ? JSON.stringify(data) : null,
             });
