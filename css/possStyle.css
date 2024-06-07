@@ -394,6 +394,10 @@ thead th {
     display: none;
 }
 
+#employee{
+    display: none;
+}
+
 /* Custom styles for form select */
 .form-selects {
     display: block;
