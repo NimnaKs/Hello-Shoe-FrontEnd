@@ -48,7 +48,7 @@ $(document).ready(function () {
     }
 
     function populateSupplierComboBox() {
-        supplierApi.getAllSuppliers()
+        return supplierApi.getAllSuppliers()
             .then((responseText) => {
                 supplierId.empty().append('<option value="">Select Supplier</option>');
                 responseText.forEach((supplier) => {
@@ -64,7 +64,7 @@ $(document).ready(function () {
     }
 
     function populateItemComboBox() {
-        productApi.getAllProducts()
+        return productApi.getAllProducts()
             .then((responseText) => {
                 itemId.empty().append('<option value="">Select Product</option>');
                 responseText.forEach((product) => {
@@ -80,7 +80,7 @@ $(document).ready(function () {
     }
 
     function populateSizeComboBox() {
-        productListApi.getAllSizes()
+        return productListApi.getAllSizes()
             .then((responseText) => {
                 sizeId.empty().append('<option value="">Select Size</option>');
                 responseText.forEach((size) => {
@@ -238,7 +238,7 @@ $(document).ready(function () {
                                 data-item-code="${stock.itemEntity.itemCode}" 
                                 data-item-desc="${stock.itemEntity.itemDesc}" 
                                 data-size-code="${stock.sizeEntity.sizeCode}" 
-                                data-size-desc="${stock.sizeEntity.itemDesc}" 
+                                data-size-desc="${stock.sizeEntity.sizeDesc}" 
                                 data-qty="${stock.qty}"
                                 data-unit-buying-price="${stock.unitBuyingPrice}" data-unit-selling-price="${stock.unitSellingPrice}"
                                 data-profit="${calculatedProfit.toFixed(2)}" data-profit-margin="${calculatedProfitMargin.toFixed(2)}">
@@ -260,29 +260,45 @@ $(document).ready(function () {
             });
     }
 
-    function setComboBoxValue(comboBox, value) {
-        if (comboBox.find(`option[value="${value}"]`).length === 0) {
-            comboBox.append(`<option value="${value}" class="temp-option">${value}</option>`);
-        }
-    }
-
     tableBody.on('click', '.updateBtn', function () {
+        const button = $(this);
+        const stockIdValue = button.data('stock-id');
+        const supplyDateValue = button.data('supplier-order-date');
+        const quantityValue = button.data('qty');
+        const unitBuyingPriceValue = button.data('unit-buying-price');
+        const unitSellingPriceValue = button.data('unit-selling-price');
+        const supplierCodeValue = button.data('supplier-name');
+        const itemCodeValue = button.data('item-desc');
+        const sizeCodeValue = button.data('size-desc');
+        const profitValue = button.data('profit');
+        const profitMarginValue = button.data('profit-margin');
 
-        stockId.val($(this).data('stock-id'));
-        supplyDate.val($(this).data('supplier-order-date'));
-        quantity.val($(this).data('qty'));
-        unitBuyingPrice.val($(this).data('unit-buying-price'));
-        unitSellingPrice.val($(this).data('unit-selling-price'));
-        setComboBoxValue(supplierId,$(this).data('supplier-code'));
-        supplierId.change();
-        setComboBoxValue(itemId,$(this).data('item-code'));
-        itemId.change();
-        setComboBoxValue(sizeId,$(this).data('size-code'));
-        sizeId.change();
-        profit.val($(this).data('profit'));
-        profitMargin.val($(this).data('profit-margin'));
+        Promise.all([
+            populateSupplierComboBox(),
+            populateItemComboBox(),
+            populateSizeComboBox()
+        ]).then(() => {
+            stockId.val(stockIdValue);
+            supplyDate.val(supplyDateValue);
+            quantity.val(quantityValue);
+            unitBuyingPrice.val(unitBuyingPriceValue);
+            unitSellingPrice.val(unitSellingPriceValue);
 
-        openStockModal('Update Stock', 'Update', 'btn-warning', stockId);
+            supplierId.val(supplierCodeValue).trigger('change');
+            itemId.val(itemCodeValue).trigger('change');
+            sizeId.val(sizeCodeValue).trigger('change');
+
+            profit.val(profitValue);
+            profitMargin.val(profitMarginValue);
+
+            console.log(`${supplierCodeValue} ${itemCodeValue} ${sizeCodeValue}`);
+
+            // Open the modal after setting the values
+            openStockModal('Update Stock', 'Update', 'btn-warning', stockIdValue);
+        }).catch((error) => {
+            console.log(error);
+            showError('Fetch Unsuccessful', error);
+        });
     });
 
     tableBody.on('click', '.deleteBtn', function () {
@@ -319,7 +335,6 @@ $(document).ready(function () {
     }
 
     function openStockModal(headingText, buttonText, buttonClass, stockId) {
-
         heading.text(headingText);
         stockSaveUpdateBtn.text(buttonText);
         stockSaveUpdateBtn.removeClass('btn-success btn-warning').addClass(buttonClass);
