@@ -103,10 +103,10 @@ $(document).ready(function () {
     }
 
     stockAddBtn.on('click', function () {
-        openStockModal('Add New Stock', 'Save', 'btn-success');
         stockForm[0].reset();
         generateStockId();
         setOtherProps();
+        openStockModal('Add New Stock', 'Save', 'btn-success');
     });
 
     stockClear.on('click', function () {
@@ -207,24 +207,41 @@ $(document).ready(function () {
         stockApi.getAllStocks()
             .then((responseText) => {
                 let stock_db = responseText;
-                console.log(responseText);
+                console.log(responseText)
                 tableBody.empty();
                 stock_db.forEach((stock) => {
+                    let buyingPrice = parseFloat(stock.unitBuyingPrice) || 0;
+                    let sellingPrice = parseFloat(stock.unitSellingPrice) || 0;
+                    let calculatedProfit = sellingPrice - buyingPrice;
+                    let calculatedProfitMargin = (buyingPrice > 0) ? (calculatedProfit / buyingPrice) * 100 : 0;
                     tableBody.append(
                         `<tr>
                         <th scope="row">${stock.stockId}</th>
-                        <td>${stock.supplyDate}</td>
-                        <td>${stock.supplierId}</td>
-                        <td>${stock.supplierName}</td>
-                        <td>${stock.itemId}</td>
-                        <td>${stock.quantity}</td>
+                        <td>${new Date(stock.supplierOrderDate).toISOString().slice(0, 10)}</td>
+                        <td>${stock.supplierEntity.supplierCode}</td>
+                        <td>${stock.supplierEntity.supplierName}</td>
+                        <td>${stock.itemEntity.itemCode}</td>
+                        <td>${stock.itemEntity.itemDesc}</td>
+                        <td>${stock.sizeEntity.sizeCode}</td>
+                        <td>${stock.sizeEntity.sizeDesc}</td>
+                        <td>${stock.qty}</td>
                         <td>${stock.unitBuyingPrice}</td>
                         <td>${stock.unitSellingPrice}</td>
-                        <td>${stock.profit}</td>
-                        <td>${stock.profitMargin}</td>
+                        <td>${calculatedProfit.toFixed(2)}</td>
+                        <td>${calculatedProfitMargin.toFixed(2)}</td>
                         <td>
                             <button class="updateBtn btn btn-warning btn-sm" data-toggle="modal" data-target="#stockModal"
-                                data-stock-id="${stock.stockId}">
+                                data-stock-id="${stock.stockId}" 
+                                data-supplier-order-date="${new Date(stock.supplierOrderDate).toISOString().slice(0, 10)}"
+                                data-supplier-code="${stock.supplierEntity.supplierCode}" 
+                                data-supplier-name="${stock.supplierEntity.supplierName}"
+                                data-item-code="${stock.itemEntity.itemCode}" 
+                                data-item-desc="${stock.itemEntity.itemDesc}" 
+                                data-size-code="${stock.sizeEntity.sizeCode}" 
+                                data-size-desc="${stock.sizeEntity.itemDesc}" 
+                                data-qty="${stock.qty}"
+                                data-unit-buying-price="${stock.unitBuyingPrice}" data-unit-selling-price="${stock.unitSellingPrice}"
+                                data-profit="${calculatedProfit.toFixed(2)}" data-profit-margin="${calculatedProfitMargin.toFixed(2)}">
                                 Edit
                             </button>
                         </td>
@@ -243,8 +260,28 @@ $(document).ready(function () {
             });
     }
 
+    function setComboBoxValue(comboBox, value) {
+        if (comboBox.find(`option[value="${value}"]`).length === 0) {
+            comboBox.append(`<option value="${value}" class="temp-option">${value}</option>`);
+        }
+    }
+
     tableBody.on('click', '.updateBtn', function () {
-        const stockId = $(this).data('stock-id');
+
+        stockId.val($(this).data('stock-id'));
+        supplyDate.val($(this).data('supplier-order-date'));
+        quantity.val($(this).data('qty'));
+        unitBuyingPrice.val($(this).data('unit-buying-price'));
+        unitSellingPrice.val($(this).data('unit-selling-price'));
+        setComboBoxValue(supplierId,$(this).data('supplier-code'));
+        supplierId.change();
+        setComboBoxValue(itemId,$(this).data('item-code'));
+        itemId.change();
+        setComboBoxValue(sizeId,$(this).data('size-code'));
+        sizeId.change();
+        profit.val($(this).data('profit'));
+        profitMargin.val($(this).data('profit-margin'));
+
         openStockModal('Update Stock', 'Update', 'btn-warning', stockId);
     });
 
@@ -282,26 +319,6 @@ $(document).ready(function () {
     }
 
     function openStockModal(headingText, buttonText, buttonClass, stockId) {
-        if (stockId) {
-            stockApi.getStock(stockId)
-                .then((responseText) => {
-                    let stock = responseText;
-                    stockId.val(stock.stockId);
-                    supplyDate.val(stock.supplyDate);
-                    supplierId.val(stock.supplierId);
-                    supplierName.val(stock.supplierName);
-                    itemId.val(stock.itemId);
-                    quantity.val(stock.quantity);
-                    unitBuyingPrice.val(stock.unitBuyingPrice);
-                    unitSellingPrice.val(stock.unitSellingPrice);
-                    profit.val(stock.profit);
-                    profitMargin.val(stock.profitMargin);
-                })
-                .catch((error) => {
-                    console.log(error);
-                    showError('Fetch Unsuccessful', error);
-                });
-        }
 
         heading.text(headingText);
         stockSaveUpdateBtn.text(buttonText);
