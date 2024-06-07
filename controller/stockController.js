@@ -35,7 +35,7 @@ $(document).ready(function () {
     let productApi = new ProductApi();
     let productListApi = new ProductListApi();
 
-    /*populateStockTable();*/
+    populateStockTable();
 
     function generateStockId() {
         stockApi.generateStockId()
@@ -126,6 +126,7 @@ $(document).ready(function () {
     });
 
     unitBuyingPrice.on('input', calculateProfitAndMargin);
+
     unitSellingPrice.on('input', calculateProfitAndMargin);
 
     function calculateProfitAndMargin() {
@@ -138,34 +139,24 @@ $(document).ready(function () {
         profitMargin.val(calculatedProfitMargin.toFixed(2));
     }
 
-   /* stockSaveUpdateBtn.on('click', function (event) {
+    stockSaveUpdateBtn.on('click', function (event) {
         event.preventDefault();
 
         let stockIdVal = stockId.val();
-        let supplyDateVal = supplyDate.val();
-        let supplierIdVal = supplierId.val();
-        let supplierNameVal = supplierName.val();
-        let itemIdVal = itemId.val();
-        let itemDetailsVal = itemDetails.val();
-        let sizeIdVal = sizeId.val();
-        let sizeDetailsVal = sizeDetails.val();
+        let supplierIdVal = supplierId.find('option:selected').text();
+        let itemIdVal = itemId.find('option:selected').text();
+        let sizeIdVal = sizeId.find('option:selected').text();
         let quantityVal = quantity.val();
         let unitBuyingPriceVal = unitBuyingPrice.val();
         let unitSellingPriceVal = unitSellingPrice.val();
-        let profitVal = profit.val();
-        let profitMarginVal = profitMargin.val();
 
         let stockModel = new StockModel(
-            null,
-            supplyDateVal,
             supplierIdVal,
-            supplierNameVal,
             itemIdVal,
+            sizeIdVal,
             quantityVal,
             unitBuyingPriceVal,
             unitSellingPriceVal,
-            profitVal,
-            profitMarginVal
         );
 
         console.log(stockModel);
@@ -201,7 +192,7 @@ $(document).ready(function () {
                 });
         }
 
-    });*/
+    });
 
     function showError(title, text) {
         Swal.fire({
@@ -212,10 +203,11 @@ $(document).ready(function () {
         });
     }
 
-    /*function populateStockTable() {
+    function populateStockTable() {
         stockApi.getAllStocks()
             .then((responseText) => {
                 let stock_db = responseText;
+                console.log(responseText);
                 tableBody.empty();
                 stock_db.forEach((stock) => {
                     tableBody.append(
@@ -287,7 +279,7 @@ $(document).ready(function () {
                     });
             }
         });
-    }*/
+    }
 
     function openStockModal(headingText, buttonText, buttonClass, stockId) {
         if (stockId) {
@@ -316,10 +308,10 @@ $(document).ready(function () {
         stockSaveUpdateBtn.removeClass('btn-success btn-warning').addClass(buttonClass);
     }
 
-    /*search.on("input", function () {
+    search.on("input", function () {
         let value = $(this).val().toLowerCase();
         $("#stock-table-body tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
-    });*/
+    });
 });

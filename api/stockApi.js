@@ -30,10 +30,18 @@ export class StockApi {
     }
 
     getAllStocks() {
-        
+        return this.handleHttpRequest("http://localhost:9090/helloShoeShop/api/v1/supplier/getAllStock", "GET");
     }
 
     deleteStock(stockId) {
-        
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/supplier/deleteStock/${stockId}`, "DELETE");
+    }
+
+    async saveStock(stockModel) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/supplier/saveStock/${localStorage.getItem('userEmail')}`, "POST",stockModel);
+    }
+
+    updateStock(stockModel, stockIdVal) {
+        return this.handleHttpRequest(`http://localhost:9090/helloShoeShop/api/v1/supplier/updateStock/${localStorage.getItem('userEmail')}`, "PUT",stockModel);
     }
 }
